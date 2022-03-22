@@ -1,0 +1,14 @@
+.table {
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 10px;
+  border: 2px solid black;
+}
+.table .thead {
+  background-color: rgb(181, 162, 199);
+  height: 40px;
+}
+.table .tbody tr td {
+  text-align: center;
+  border-bottom: 1px solid rgb(65, 65, 61);
+}

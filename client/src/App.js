@@ -1,10 +1,14 @@
-import './App.css';
+import { Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import Routes from "./Routes";
+
+const browserHistory = createBrowserHistory();
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Pokemon</h1>
-    </div>
+    <Router history={browserHistory}>
+      <Routes />
+    </Router>
   );
 }
 

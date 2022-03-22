@@ -1,0 +1,51 @@
+/* body {
+  margin: 0;
+  font-family: "Times New Roman", Times, serif;
+} */
+
+.landing {
+  height: 100%;
+  background-image: url("../../assets/poke3-fondo.jpg");
+}
+
+.landing .header {
+  width: 100%;
+  background: rgb(109, 100, 100);
+}
+
+.landing .header .navContainer {
+  background-color: rgb(190, 26, 26);
+  display: flex;
+  justify-content: space-around;
+}
+
+.landing .header .navContainer ul {
+  margin: 0;
+  list-style: none;
+  padding: 0%;
+  display: flex;
+  align-items: center;
+}
+.landing .header .navContainer ul li {
+  display: block;
+  padding: 15px 20px;
+  color: azure;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.landing .header .navContainer .repositorio label {
+  color: beige;
+  font-size: 20px;
+}
+.landing .header .navContainer .home {
+  color: beige;
+  text-decoration: none;
+}
+.landing .header .navContainer .repositorio a {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  color: beige;
+  text-decoration: none;
+}
