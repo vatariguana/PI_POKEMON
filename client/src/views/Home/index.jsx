@@ -8,6 +8,7 @@ import {
   getAllPokemonId,
 } from "../../redux/actions/pokemon.actions";
 import { getAllTypes } from "../../redux/actions/tipo.actions";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -125,6 +126,10 @@ const Home = () => {
 
   return (
     <div>
+      <Link to="/home/new">
+        <button>Create</button>
+      </Link>
+
       <Search />
       <Filtro
         onChangeType={onChangeType}

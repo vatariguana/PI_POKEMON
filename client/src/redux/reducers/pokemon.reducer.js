@@ -2,7 +2,7 @@ const initialState = {
   isLoading: false,
   pokemons: null,
   errors: null,
-  pokemonId: []
+  pokemonId: null,
 };
 
 function pokemonReducer(state = initialState, action) {
@@ -20,17 +20,17 @@ function pokemonReducer(state = initialState, action) {
         isLoading: false,
         pokemons: action.payload,
       };
-    case "GET_ALL_POKEMONSID":
+    case "GET_ONE_POKEMONSID":
       return {
         ...state,
-        pokemonType: action.payload
-      };
-     case "GET_POKEMONS_NAME":
-      return{
-        ...state,
-        isLoading: false,
         pokemonId: action.payload
-      } 
+      };
+    //  case "GET_POKEMONS_NAME":
+    //   return{
+    //     ...state,
+    //     isLoading: false,
+    //     pokemonId: action.payload
+    //   } 
     case "GET_ALL_ERRORS":
       return {
         ...state,

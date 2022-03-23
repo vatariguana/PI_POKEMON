@@ -47,10 +47,10 @@ export const getAllPokemonId = (id) => async (dispatch) => {
     type:"GET_ALL_LOADING"
   })
   try {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const response = await axios.get(`http://localhost:3001/pokemons/${id}`);
     dispatch({
-      type: "GET_ALL_POKEMONSID",
-      payload: response.data,
+      type: "GET_ONE_POKEMONSID",
+      payload: response.data[0],
     })
   } catch (error) {
     dispatch({

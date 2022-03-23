@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./styles.css";
 
 const Table = (props) => {
@@ -26,16 +27,30 @@ const Table = (props) => {
                       element[keyValue].map((item) => {
                         elementArray = `${elementArray} ${item}`;
                       });
-                      return <td>{elementArray}</td>;
+                      return (
+                        <td>
+                          <Link to={`/home/detail/${element.id}`}>
+                            {elementArray}
+                          </Link>
+                        </td>
+                      );
                     } else {
                       if (keyValue === "imagen") {
                         return (
                           <td>
-                            <img src={element[keyValue]} alt="imagenPoke" />
+                            <Link to={`/home/detail/${element.id}`}>
+                              <img src={element[keyValue]} alt="imagenPoke" />
+                            </Link>
                           </td>
                         );
                       }
-                      return <td>{element[keyValue]}</td>;
+                      return (
+                        <td>
+                          <Link to={`/home/detail/${element.id}`}>
+                            {element[keyValue]}
+                          </Link>
+                        </td>
+                      );
                     }
                   } else {
                     return <td></td>;
