@@ -1,0 +1,56 @@
+.divPrincipal {
+  height: 100%;
+  background-image: url("../../assets/create6.jpg");
+  display: flex;
+  justify-content: center;
+}
+.divPrincipal .form {
+  width: 400px;
+  padding: 25px;
+  border-radius: 10px;
+  margin: auto;
+  background-color: #ccc;
+  box-sizing: border-box;
+  display: inline-block;
+}
+.divPrincipal .form h2 {
+  background-color: red;
+}
+
+.divPrincipal .form label {
+  width: 72px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.divPrinipal .form input[type="text"],
+.divPrincipal .form input[type="number"] {
+  width: 180px;
+  padding: 3px 10px;
+  border: 2px solid #f6f6f6;
+  border-radius: 3px;
+  background-color: #f6f6f6;
+  margin: 8px 5px;
+  display: flex;
+}
+.divPrincipal .form input[type="submit"] {
+  width: 100%;
+  padding: 10px 16px;
+  margin-top: 20px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  display: block;
+  color: #fff;
+  background-color: #000;
+}
+
+.divPrincipal .form input[type="submit"]:hover {
+  cursor: pointer;
+  background-color: grey;
+}
+
+.divPrincipal .form .enviar {
+  display: flex;
+  width: 100%;
+}

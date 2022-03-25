@@ -63,4 +63,27 @@ export const getAllPokemonId = (id) => async (dispatch) => {
   }
 };
 
+export const CreatePoke = (data)=> async(dispatch)=>{
+
+  dispatch({
+    type:"GET_ALL_LOADING"
+  })
+  try {
+    const response = await axios.post(`http://localhost:3001/pokemons`, data);
+    dispatch({
+      type: "POST_CREATE_POKE",
+      payload: response.data,
+    })
+  } catch (error) {
+    dispatch({
+      type: "GET_ALL_ERRORS",
+      payload: {
+        title: "ERROR",
+        message: "ALGO FALLO",
+      },
+    })
+  }
+
+
+}
 

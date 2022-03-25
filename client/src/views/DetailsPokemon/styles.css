@@ -1,0 +1,8 @@
+.contenedor {
+  display: inline-block;
+}
+
+.contenedor h3 {
+  border-bottom: 1px solid rgb(145, 22, 22);
+  position: relative;
+}

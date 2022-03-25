@@ -39,6 +39,7 @@ module.exports = (sequelize) => {
     peso:{
       type: DataTypes.FLOAT,
     },
+
     createBdId: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

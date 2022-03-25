@@ -3,46 +3,80 @@ import { useDispatch, useSelector } from "react-redux";
 import Search from "../../components/Search";
 import Filtro from "../../components/Filtro";
 import Table from "../../components/Table";
-import {
-  getAllPokemons,
-  getAllPokemonId,
-} from "../../redux/actions/pokemon.actions";
+import { getAllPokemons } from "../../redux/actions/pokemon.actions";
 import { getAllTypes } from "../../redux/actions/tipo.actions";
 import { Link } from "react-router-dom";
-
+import PaginadoPokemon from "../../components/Paginado";
 const Home = () => {
   const dispatch = useDispatch();
-  const { pokemons, isLoading, pokemonId } = useSelector(
+  const { pokemons, isLoading } = useSelector(
     ({ pokemonReducer }) => pokemonReducer
   );
   const { pokemonType } = useSelector(({ tipoReducer }) => tipoReducer);
 
-  // const [type, setType] = useState("");
   const [pokemonTable, setPokemonTable] = useState([]);
+  const [paginado, setPaginado] = useState(1);
+  // paginado
+  const [paginaActual, setPaginaActual] = useState(1); //estados locales
+  // const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
+  const pokemonsPerPage = 2;
+  const indexOfLastPokemon = paginaActual * pokemonsPerPage;
+  const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
+  const pokemonsPaginaActual = pokemons?.slice(
+    indexOfFirstPokemon,
+    indexOfLastPokemon
+  );
+  const onChangePaginado = (pageNumber) => {
+    console.log(pageNumber, "pagenumber");
+    setPaginaActual(pageNumber);
+  };
+  useEffect(() => {
+    setPokemonTable(pokemonsPaginaActual);
+  }, [paginaActual]);
+
+  // const [type, setType] = useState("");
   useEffect(() => {
     dispatch(getAllPokemons());
     dispatch(getAllTypes());
   }, []);
 
   useEffect(() => {
-    if (pokemons) {
-      setPokemonTable(pokemons);
+    if (pokemonsPaginaActual && !isLoading) {
+      setPokemonTable(pokemonsPaginaActual);
+      // cambien en el set pokemons por pokemonsPaginaActual
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    if (pokemons) {
+      console.log("paginado", pokemons?.length);
+      setPaginado(pokemons?.length);
+    }
+  }, [pokemons]);
 
   const onChangeType = (event) => {
     const value = event.target.value;
     let temporalPokemonTable = [];
     temporalPokemonTable = pokemons.filter((item) => {
-      if (item.tipos.includes(value)) {
+      const findTipes = item.tipos.find((type) => {
+        return type.name === value;
+      });
+      if (findTipes) {
         return item;
       }
     });
+    const filtroType = temporalPokemonTable?.slice(
+      indexOfFirstPokemon,
+      indexOfLastPokemon
+    );
+
     if (value) {
-      setPokemonTable(temporalPokemonTable);
+      setPokemonTable(filtroType);
     } else {
       setPokemonTable(pokemons);
     }
+    setPaginaActual(1);
+    setPaginado(temporalPokemonTable?.length);
   };
 
   const onChangeApiCreated = (event) => {
@@ -129,7 +163,6 @@ const Home = () => {
       <Link to="/home/new">
         <button>Create</button>
       </Link>
-
       <Search />
       <Filtro
         onChangeType={onChangeType}
@@ -139,6 +172,12 @@ const Home = () => {
         onChangeFuerza={onChangeFuerza}
       />
       <Table headers={headers} data={pokemonTable} />
+      <PaginadoPokemon
+        pokemonsPerPage={pokemonsPerPage}
+        paginado={paginado}
+        onChange={onChangePaginado}
+      />
+      ;
     </div>
   );
 };

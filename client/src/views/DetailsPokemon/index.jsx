@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { getAllPokemonId } from "../../redux/actions/pokemon.actions";
+import "./styles.css";
 const DetailsPokemon = () => {
   const dispatch = useDispatch();
   const { isLoading, pokemonId } = useSelector(
@@ -15,12 +16,12 @@ const DetailsPokemon = () => {
   console.log("pokemonId", pokemonId);
   let auxTipos = "";
   pokemonId?.types?.forEach((element) => {
-    auxTipos = auxTipos + element;
+    auxTipos = auxTipos + element.name;
   });
   //   console.log(auxTipos, "auxTipos");
   return (
-    <div>
-      <h3>{`name: ${pokemonId?.name}`}</h3>
+    <div className="contenedor">
+      <h3 className="h3">{`name: ${pokemonId?.name}`}</h3>
       <img src={`${pokemonId?.imagen}`} alt="imagenDetalle" />
       <h3>{`tipos: ${auxTipos}`}</h3>
       <h3>{`id: ${pokemonId?.id}`}</h3>

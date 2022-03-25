@@ -3,6 +3,7 @@ const initialState = {
   pokemons: null,
   errors: null,
   pokemonId: null,
+  
 };
 
 function pokemonReducer(state = initialState, action) {
@@ -25,6 +26,11 @@ function pokemonReducer(state = initialState, action) {
         ...state,
         pokemonId: action.payload
       };
+      case "POST_CREATE_POKE":
+        return{
+          ...state,
+
+        }
     //  case "GET_POKEMONS_NAME":
     //   return{
     //     ...state,

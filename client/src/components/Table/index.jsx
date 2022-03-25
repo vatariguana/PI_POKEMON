@@ -4,7 +4,7 @@ import "./styles.css";
 
 const Table = (props) => {
   const { headers, data } = props;
-  console.log(data, "componente table");
+
   return (
     <>
       <table className="table">
@@ -25,7 +25,7 @@ const Table = (props) => {
                     if (header.isArray) {
                       let elementArray = "";
                       element[keyValue].map((item) => {
-                        elementArray = `${elementArray} ${item}`;
+                        elementArray = `${elementArray} ${item.name}`;
                       });
                       return (
                         <td>

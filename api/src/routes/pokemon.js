@@ -5,7 +5,7 @@ const axios = require("axios");
 const { Pokemon, Tipo } = require("../db");
 
 const getAllPokemons = async () => {
-  const info = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=5");
+  const info = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=40");
   const pokemonesAPI = info.data.results;
   const pokemones = [];
   for (let i = 0; i < pokemonesAPI.length; i++) {
@@ -13,7 +13,7 @@ const getAllPokemons = async () => {
     const detallePokemon = await axios.get(pokemonesAPI[i].url);
     const imagenPokemon = detallePokemon.data.sprites.front_default;
     const types = detallePokemon.data.types; // tipos de pokemon (array)
-    const typePokemon = types.map((item)=>  item.type.name)
+    const typePokemon = types.map((item)=> item.type)
     const fuerzaPokemonApi = detallePokemon.data.stats[1].base_stat
     //console.log(detallePokemon.data.stats[1].base_stat, "fuerza")
     //console.log(typePokemon, "hola linea 17 tipo pokemon")
@@ -75,7 +75,7 @@ const getOnePokemon = async (id) => {
       name: detallePokeId.data.name,
       imagen: detallePokeId.data.sprites.front_default,
       vida: detallePokeId.data.stats[0].base_stat,
-      types: detallePokeId.data.types.map((e) => e.type.name),
+      types: detallePokeId.data.types.map((e) => e.type),
       fuerza: detallePokeId.data.stats[1].base_stat,
       defensa: detallePokeId.data.stats[2].base_stat,
       velocidad: detallePokeId.data.stats[5].base_stat,
@@ -91,15 +91,19 @@ const getOneBd = async (search) => {
 
   if (isBdID) {
     const bdDetallePokeId = await Pokemon.findByPk(search);
+    console.log(bdDetallePokeId, "detallle poke idddssss")
     if (bdDetallePokeId) {
       const bdPoke = {
         id: bdDetallePokeId.dataValues.id,
         name: bdDetallePokeId.dataValues.name,
         //imagen: bdDetallePokeId.dataValues.sprites.front_default,
         vida: bdDetallePokeId.vida,
-        //types: bdDetallePokeId.dataValues.types.map(e=> e.type.name),
+        //tipos: bdDetallePokeId.dataValues.types.map(e=> e.type.name),
+        //tipos: bdDetallePokeId.dataValues.tipos,
+        // le quite el comentado a tipos
         fuerza: bdDetallePokeId.dataValues.fuerza,
-        defensa: bdDetallePokeId.dataValues.defenza,
+        defensa: bdDetallePokeId.dataValues.defensa,
+        //ojo defenza por defensa
         velocidad: bdDetallePokeId.dataValues.velocidad,
         altura: bdDetallePokeId.dataValues.altura,
         peso: bdDetallePokeId.dataValues.peso,
@@ -117,14 +121,19 @@ const getOneBd = async (search) => {
         const response = bdDetallePokeName[0];
         const objResponse = Object.values(response);
         const finalResponse = objResponse[0];
+        //console.log(finalResponse,"finalresponseeeee")
+        //se cAe cuadno se envia otro nombre
         const bdPoke = {
           id: finalResponse.id,
           name: finalResponse.name,
           //imagen: finalResponse.sprites.front_default,
           vida: finalResponse.vida,
-          //types: finalResponse.types.map(e=> e.type.name),
+          //tipos: finalResponse.types.map(e=> e.type.name),
+          //tipos: finalResponse.tipos,
+          //le quite el comentado a tipos
           fuerza: finalResponse.fuerza,
-          defensa: finalResponse.defenza,
+          defensa: finalResponse.defensa,
+          //ojo defenza por defensa
           velocidad: finalResponse.velocidad,
           altura: finalResponse.altura,
           peso: finalResponse.peso,
@@ -172,7 +181,8 @@ router.get("/pokemons/:id", async (req, res) => {
 
 // create new pokemon
 router.post("/pokemons", async (req, res) => {
-  const { id, name, vida, fuerza, defenza, velocidad, altura, peso, tipo } =
+  const { id, name, vida, fuerza, defensa, velocidad, altura, peso, tipo } =
+  //ojo defenza por defensa
     req.body;
 
   const pokeExiste = await Pokemon.findOne({
@@ -188,11 +198,13 @@ router.post("/pokemons", async (req, res) => {
       name,
       vida,
       fuerza,
-      defenza,
+      defensa,
+      //defenza por defensa
       velocidad,
       altura,
       peso,
       id,
+
     });
 
     const dataTipo = await Tipo.findAll({
