@@ -148,7 +148,7 @@ const Home = () => {
     },
     {
       label: "Tipo",
-      key: "tipos",
+      key: "types",
       isArray: true,
     },
     {

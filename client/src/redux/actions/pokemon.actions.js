@@ -6,9 +6,23 @@ export const getAllPokemons = () => async (dispatch) => {
   })
   try {
     const response = await axios.get("http://localhost:3001/pokemons");
+    const actualizado = response.data.map((item) =>{
+      if(item?.tipos){
+        const types = item.tipos;
+        delete item["tipos"];
+        return {
+          ...item,
+          types,
+        }
+      }else {
+        return item
+      }
+      
+    })
+    console.log("actualizao es", actualizado)
     dispatch({
       type: "GET_ALL_POKEMONS",
-      payload: response.data,
+      payload: actualizado,
     })
   } catch (error) {
     dispatch({
@@ -44,11 +58,13 @@ export const getPokemonsName = (name)=> async(dispatch)=>{
 }
 
 export const getAllPokemonId = (id) => async (dispatch) => {
+  console.log("ID enviado", id)
   dispatch({
     type:"GET_ALL_LOADING"
   })
   try {
     const response = await axios.get(`http://localhost:3001/pokemons/${id}`);
+    console.log("respsonse one pokemon", response.data)
     dispatch({
       type: "GET_ONE_POKEMONSID",
       payload: response.data[0],

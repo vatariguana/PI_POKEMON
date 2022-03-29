@@ -10,11 +10,12 @@ const DetailsPokemon = () => {
   );
   const location = useLocation();
   const id = location.pathname.split("/")[3];
+  console.log("ID", id);
   useEffect(() => {
     dispatch(getAllPokemonId(id));
   }, []);
   console.log("pokemonid", pokemonId);
-  const auxTipos = pokemonId?.tipos?.map((element) => {
+  const auxTipos = pokemonId?.types?.map((element) => {
     return <p key={element.name}>{element.name}</p>;
   });
 

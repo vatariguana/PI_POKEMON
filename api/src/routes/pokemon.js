@@ -21,7 +21,7 @@ const getAllPokemons = async () => {
       id: idPokemon,
       name: nombrePokemon,
       imagen: imagenPokemon,
-      tipos: typePokemon,
+      types: typePokemon,
       createBdId: false,
       fuerza: fuerzaPokemonApi,
     };
@@ -60,6 +60,7 @@ const bdPoke = async () => {
 const allPoke = async () => {
   const allPokemonsApi = await getAllPokemons(); // traer los datos del API
   const allBd = await bdPoke(); // traer los datos de mi base de datos
+  console.log("bdd", allBd)
   const resultadoPoke = [...allPokemonsApi, ...allBd];
   return resultadoPoke;
 };
@@ -91,12 +92,15 @@ const getOnePokemon = async (id) => {
 
 const getOneBd = async (search) => {
   const isBdID = search.split("-")[1];
-
+  console.log("=====>", search)
   if (isBdID) {
     const bdDetallePokeId = await Pokemon.findByPk(search);
     
     if (bdDetallePokeId) {
-      const tiposPokemones = await Pokemon.findAll({
+      const tiposPokemones = await Pokemon.findAll({   
+        where: {
+          id: search,
+        },
         include: {    
           model: Tipo,
           atributes: ["id", "name"],
@@ -105,17 +109,13 @@ const getOneBd = async (search) => {
           },
         },
       });
-
-      console.log("tipos pokemones", tiposPokemones[0])
-      // const response = bdDetallePokeName[0];
-      // const objResponse = Object.values(response);
       const bdPoke = {
         id: tiposPokemones[0].dataValues.id,
         name: tiposPokemones[0].dataValues.name,
         //imagen: tiposPokemones[0].dataValues.sprites.front_default,
         vida: tiposPokemones[0].dataValues.vida,
         //tipos: tiposPokemones[0].dataValues.types.map(e=> e.type.name),
-        tipos: tiposPokemones[0].dataValues.tipos,
+        types: tiposPokemones[0].dataValues.tipos,
         // le quite el comentado a tipos
         fuerza: tiposPokemones[0].dataValues.fuerza,
         defensa: tiposPokemones[0].dataValues.defensa,
@@ -125,19 +125,27 @@ const getOneBd = async (search) => {
         peso: tiposPokemones[0].dataValues.peso,
         
       };
-      console.log("bdDetallePokeId=====>1", bdDetallePokeId)
+
+      // console.log("0------>", bdDetallePokeId)
+      // const bdPoke = {
+      //   id: bdDetallePokeId.dataValues.id,
+      //   name: bdDetallePokeId.dataValues.name,
+      //   //imagen: bdDetallePokeId.dataValues.sprites.front_default,
+      //   vida: bdDetallePokeId.dataValues.vida,
+      //   //tipos: bdDetallePokeId.dataValues.types.map(e=> e.type.name),
+      //   types: bdDetallePokeId.dataValues.tipos,
+      //   // le quite el comentado a tipos
+      //   fuerza: bdDetallePokeId.dataValues.fuerza,
+      //   defensa: bdDetallePokeId.dataValues.defensa,
+      //   //ojo defenza por defensa
+      //   velocidad: bdDetallePokeId.dataValues.velocidad,
+      //   altura: bdDetallePokeId.dataValues.altura,
+      //   peso: bdDetallePokeId.dataValues.peso,
+        
+      // };
+      
       return bdPoke;
     }
-    
-    // return await Pokemon.findAll({
-    //   include: {    
-    //     model: Tipo,
-    //     atributes: ["id", "name"],
-    //     through: {
-    //       attributes: [],
-    //     },
-    //   },
-    // });
   } else {
     if (!parseInt(search)) {
       const bdDetallePokeName = await Pokemon.findAll({
@@ -149,8 +157,6 @@ const getOneBd = async (search) => {
         const response = bdDetallePokeName[0];
         const objResponse = Object.values(response);
         const finalResponse = objResponse[0];
-        //console.log(finalResponse,"finalresponseeeee")
-        //se cAe cuadno se envia otro nombre
         const bdPoke = {
           id: finalResponse.id,
           name: finalResponse.name,
@@ -184,7 +190,7 @@ const onePoke = async (id) => {
   } else if (onePokemonBd || onePokemonApi) {
     onePokemon.push(onePokemonBd || onePokemonApi);
   }
-
+  console.log("ONE POKEMN", onePokemon)
   return onePokemon;
 };
 
