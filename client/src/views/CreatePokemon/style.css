@@ -6,17 +6,22 @@
 }
 .divPrincipal .form {
   width: 400px;
-  padding: 25px;
+  padding: 8px;
   border-radius: 10px;
   margin: auto;
   background-color: #ccc;
   box-sizing: border-box;
   display: inline-block;
 }
-.divPrincipal .form h2 {
-  background-color: red;
+.divPrincipal .form .tipos {
+  background-color: rgb(102, 81, 81);
 }
 
+.divPrincipal .form .tiposCuadro {
+  border-bottom: 1px solid rgb(85, 83, 83);
+  display: flex;
+  justify-content: center;
+}
 .divPrincipal .form label {
   width: 72px;
   font-weight: bold;
@@ -24,7 +29,7 @@
   align-items: center;
 }
 
-.divPrinipal .form input[type="text"],
+.divPrincipal .form input[type="text"],
 .divPrincipal .form input[type="number"] {
   width: 180px;
   padding: 3px 10px;

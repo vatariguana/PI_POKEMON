@@ -26,17 +26,22 @@ const createTypeBD = async () => {
 }
 
 router.get("/type", async (req, res) => {
-    const allTypesBD = await getAllTypesBD();
+    try {
+     const allTypesBD = await getAllTypesBD();
     if(allTypesBD.length === 0) {  
        const createType = await createTypeBD();
-       console.log("create type", createType)
        if(createType){
             const allTypesBD = await getAllTypesBD();
-            console.log("all types BDD", allTypesBD)
             res.status(200).json(allTypesBD); 
        }
     }else{
         res.status(200).json(allTypesBD); 
+       
+    }
+    } catch (error) {
+        
+        res.status(404).send("Not Found")
+        
     }
 });
 

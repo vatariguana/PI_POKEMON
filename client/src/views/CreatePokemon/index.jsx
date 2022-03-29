@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllTypes } from "../../redux/actions/tipo.actions";
+import { Link } from "react-router-dom";
 import { CreatePoke } from "../../redux/actions/pokemon.actions";
 import "./style.css";
 
@@ -71,26 +72,28 @@ const CreatePokemon = () => {
       [inputName]: value,
     });
   };
-  console.log(data, "soy data");
 
   const onSubmitForm = (e) => {
     e.preventDefault();
     const ver = data.tipos;
     data.tipo = data.tipos;
+    //console.log("data.tipo", data.tipo);
     if (ver.length === 0) {
       alert("ingrese tipo de pokemon");
+    } else {
+      // console.log("exito");
+      dispatch(CreatePoke(data));
+      alert("pokemon creado");
     }
-    // else {
-    //   console.log("exito");
-    // }
-    // dispatch(CreatePoke(data));
-    // alert("pokemon creado");
   };
 
   return (
     <div className="divPrincipal">
       <form onSubmit={onSubmitForm} className="form">
-        <h2>Crear nuevo Pokemon</h2>
+        <Link to="/home">
+          <button>Home</button>
+        </Link>
+        <h3>Crear nuevo Pokemon</h3>
         <label>
           Nombre:
           <input
@@ -98,35 +101,31 @@ const CreatePokemon = () => {
             id="name"
             type="text"
             name="name"
+            placeholder="Nombre..."
             required
           />
         </label>
-        <br></br>
-        {/* <label>
-          Imagen:
-          <img src={} alt="imagenpokemon"/>
-        </label> */}
+
+        {/* <label>Imagen:</label>
+        <input type="file" id="myfile" name="myfile" /> */}
         <br></br>
         <label>Tipo</label>
         <select onChange={onChangeTypesPokemon} required>
           {/* <option value="">Buscar por:</option> */}
           <option value="tiposPokemon">Seleccione tipo de pokemon</option>
           {pokemonType.map((item) => {
-            return <option value={item.id}>{item.name}</option>;
+            return (
+              <option value={item.id} className="tipos">
+                {item.name}
+              </option>
+            );
           })}
         </select>
         {data.tipos?.map((item) => {
-          console.log(item, "item");
-          return <h3>{item?.name}</h3>;
+          return <h3 className="tiposCuadro">{item?.name}</h3>;
         })}
 
         <br></br>
-        {/* <label>
-          Id:
-          <input />
-        </label> */}
-        <br></br>
-
         <label>
           Vida:
           <input
@@ -136,6 +135,7 @@ const CreatePokemon = () => {
             name="vida"
             min="0"
             max="100"
+            placeholder="Vida..."
             required
           />
         </label>
@@ -147,8 +147,7 @@ const CreatePokemon = () => {
             id="fuerza"
             type="number"
             name="fuerza"
-            // min="0"
-            // max="100"
+            placeholder="Fuerza..."
             required
           />
         </label>
@@ -160,6 +159,7 @@ const CreatePokemon = () => {
             id="defensa"
             type="number"
             name="defensa"
+            placeholder="Defensa..."
             // min="0"
             // max="100"
             required
@@ -173,6 +173,7 @@ const CreatePokemon = () => {
             id="velocidad"
             type="number"
             name="velocidad"
+            placeholder="Velocidad..."
             // min="1"
             // max="100"
             required
@@ -186,6 +187,7 @@ const CreatePokemon = () => {
             id="altura"
             type="number"
             name="altura"
+            placeholder="Altura..."
             // min="1"
             // max="100"
             required
@@ -199,6 +201,7 @@ const CreatePokemon = () => {
             id="peso"
             type="number"
             name="peso"
+            placeholder="Peso..."
             // min="1"
             // max="100"
             required

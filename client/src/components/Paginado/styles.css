@@ -1,0 +1,17 @@
+.paginadoNav {
+  display: flex;
+}
+
+.paginadoNav .paginadoUl {
+  color: red;
+  display: flex;
+}
+
+.paginadoNav .paginadoUl .paginadoLi {
+  list-style: none;
+  padding: 9px;
+}
+
+.paginadoNav .paginadoUl .paginadoLi .paginadoBot {
+  padding: 5px;
+}

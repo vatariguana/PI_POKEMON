@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { getAllPokemonId } from "../../redux/actions/pokemon.actions";
 import "./styles.css";
 const DetailsPokemon = () => {
@@ -13,24 +13,38 @@ const DetailsPokemon = () => {
   useEffect(() => {
     dispatch(getAllPokemonId(id));
   }, []);
-  console.log("pokemonId", pokemonId);
-  let auxTipos = "";
-  pokemonId?.types?.forEach((element) => {
-    auxTipos = auxTipos + element.name;
+  console.log("pokemonid", pokemonId);
+  const auxTipos = pokemonId?.tipos?.map((element) => {
+    return <p key={element.name}>{element.name}</p>;
   });
-  //   console.log(auxTipos, "auxTipos");
+
   return (
-    <div className="contenedor">
-      <h3 className="h3">{`name: ${pokemonId?.name}`}</h3>
-      <img src={`${pokemonId?.imagen}`} alt="imagenDetalle" />
-      <h3>{`tipos: ${auxTipos}`}</h3>
-      <h3>{`id: ${pokemonId?.id}`}</h3>
-      <h3>{`vida: ${pokemonId?.vida}`}</h3>
-      <h3>{`fuerza: ${pokemonId?.fuerza}`}</h3>
-      <h3>{`defensa: ${pokemonId?.defensa}`}</h3>
-      <h3>{`velocidad: ${pokemonId?.velocidad}`}</h3>
-      <h3>{`altura: ${pokemonId?.altura}`}</h3>
-      <h3>{`peso: ${pokemonId?.peso}`}</h3>
+    <div className="detailsPokemon">
+      <Link to="/home">
+        <button>Home</button>
+      </Link>
+      {pokemonId?.imagen && (
+        <div className="imageInfo">
+          <img
+            className="imagen"
+            src={`${pokemonId?.imagen}`}
+            alt="imagenDetalle"
+          />
+        </div>
+      )}
+
+      <div className="contenedorInfo">
+        <h3 className="info">{`Name: ${pokemonId?.name}`}</h3>
+        <h3 className="info">Tipos:</h3>
+        {auxTipos}
+        <h3 className="info">{`Id: ${pokemonId?.id}`}</h3>
+        <h3 className="info">{`Vida: ${pokemonId?.vida}`}</h3>
+        <h3 className="info">{`Fuerza: ${pokemonId?.fuerza}`}</h3>
+        <h3 className="info">{`Defensa: ${pokemonId?.defensa}`}</h3>
+        <h3 className="info">{`Velocidad: ${pokemonId?.velocidad}`}</h3>
+        <h3 className="info">{`Altura: ${pokemonId?.altura}`}</h3>
+        <h3 className="info">{`Peso: ${pokemonId?.peso}`}</h3>
+      </div>
     </div>
   );
 };

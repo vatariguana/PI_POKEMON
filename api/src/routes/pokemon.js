@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-//const {allPoke} = require("./functions");
 const { Pokemon, Tipo } = require("../db");
 
 const getAllPokemons = async () => {
-  const info = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=40");
+  const info = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=5");
   const pokemonesAPI = info.data.results;
   const pokemones = [];
   for (let i = 0; i < pokemonesAPI.length; i++) {
@@ -33,7 +32,7 @@ const getAllPokemons = async () => {
 
 const bdPoke = async () => {
   return await Pokemon.findAll({
-    include: {
+    include: {    
       model: Tipo,
       atributes: ["id", "name"],
       through: {
@@ -60,7 +59,7 @@ const bdPoke = async () => {
 
 const allPoke = async () => {
   const allPokemonsApi = await getAllPokemons(); // traer los datos del API
-  const allBd = await bdPoke(allPokemonsApi); // traer los datos de mi base de datos
+  const allBd = await bdPoke(); // traer los datos de mi base de datos
   const resultadoPoke = [...allPokemonsApi, ...allBd];
   return resultadoPoke;
 };
@@ -70,6 +69,8 @@ const getOnePokemon = async (id) => {
     const detallePokeId = await axios.get(
       `https://pokeapi.co/api/v2/pokemon/${id}`
     );
+
+    
     const detalleId = {
       id: detallePokeId.data.id,
       name: detallePokeId.data.name,
@@ -83,7 +84,9 @@ const getOnePokemon = async (id) => {
       peso: detallePokeId.data.weight,
     };
     return detalleId;
-  } catch (error) {}
+  } catch (error) {
+
+  }
 };
 
 const getOneBd = async (search) => {
@@ -91,25 +94,50 @@ const getOneBd = async (search) => {
 
   if (isBdID) {
     const bdDetallePokeId = await Pokemon.findByPk(search);
-    console.log(bdDetallePokeId, "detallle poke idddssss")
+    
     if (bdDetallePokeId) {
+      const tiposPokemones = await Pokemon.findAll({
+        include: {    
+          model: Tipo,
+          atributes: ["id", "name"],
+          through: {
+            attributes: [],
+          },
+        },
+      });
+
+      console.log("tipos pokemones", tiposPokemones[0])
+      // const response = bdDetallePokeName[0];
+      // const objResponse = Object.values(response);
       const bdPoke = {
-        id: bdDetallePokeId.dataValues.id,
-        name: bdDetallePokeId.dataValues.name,
-        //imagen: bdDetallePokeId.dataValues.sprites.front_default,
-        vida: bdDetallePokeId.vida,
-        //tipos: bdDetallePokeId.dataValues.types.map(e=> e.type.name),
-        //tipos: bdDetallePokeId.dataValues.tipos,
+        id: tiposPokemones[0].dataValues.id,
+        name: tiposPokemones[0].dataValues.name,
+        //imagen: tiposPokemones[0].dataValues.sprites.front_default,
+        vida: tiposPokemones[0].dataValues.vida,
+        //tipos: tiposPokemones[0].dataValues.types.map(e=> e.type.name),
+        tipos: tiposPokemones[0].dataValues.tipos,
         // le quite el comentado a tipos
-        fuerza: bdDetallePokeId.dataValues.fuerza,
-        defensa: bdDetallePokeId.dataValues.defensa,
+        fuerza: tiposPokemones[0].dataValues.fuerza,
+        defensa: tiposPokemones[0].dataValues.defensa,
         //ojo defenza por defensa
-        velocidad: bdDetallePokeId.dataValues.velocidad,
-        altura: bdDetallePokeId.dataValues.altura,
-        peso: bdDetallePokeId.dataValues.peso,
+        velocidad: tiposPokemones[0].dataValues.velocidad,
+        altura: tiposPokemones[0].dataValues.altura,
+        peso: tiposPokemones[0].dataValues.peso,
+        
       };
+      console.log("bdDetallePokeId=====>1", bdDetallePokeId)
       return bdPoke;
     }
+    
+    // return await Pokemon.findAll({
+    //   include: {    
+    //     model: Tipo,
+    //     atributes: ["id", "name"],
+    //     through: {
+    //       attributes: [],
+    //     },
+    //   },
+    // });
   } else {
     if (!parseInt(search)) {
       const bdDetallePokeName = await Pokemon.findAll({
@@ -117,7 +145,7 @@ const getOneBd = async (search) => {
           name: search,
         },
       });
-      if (bdDetallePokeName) {
+      if (bdDetallePokeName.length > 0) {
         const response = bdDetallePokeName[0];
         const objResponse = Object.values(response);
         const finalResponse = objResponse[0];
@@ -139,6 +167,8 @@ const getOneBd = async (search) => {
           peso: finalResponse.peso,
         };
         return bdPoke;
+      }else{
+        return null
       }
     }
   }
@@ -175,7 +205,7 @@ router.get("/pokemons/:id", async (req, res) => {
   if (pokeOne.length > 0) {
     res.status(200).json(pokeOne);
   } else {
-    res.status(404).json("no encontro");
+    res.status(404).json({message: "pokemon ingresado no existe"});
   }
 });
 
@@ -192,7 +222,7 @@ router.post("/pokemons", async (req, res) => {
   });
 
   if (pokeExiste) return res.json({ msg: "Pokemon existente" });
-
+  console.log("tipo ===", tipo)
   try {
     const newPoke = await Pokemon.create({
       name,
@@ -207,15 +237,19 @@ router.post("/pokemons", async (req, res) => {
 
     });
 
-    const dataTipo = await Tipo.findAll({
-      where: {
-        name: tipo,
-      },
-    });
-
-    await newPoke.addTipo(dataTipo, {
-      through: "tipo_pokemon",
-    });
+    // hacer loop que recorra tipo y para cada item de tipo haga
+    for(let i=0; i < tipo.length; i++){
+      const dataTipo = await Tipo.findAll({
+        where: {
+          name: tipo[i].name,
+        },
+      });
+      console.log(dataTipo,"datatipo<=======")
+  
+      await newPoke.addTipo(dataTipo, {
+        through: "tipo_pokemon",
+      });
+    }
     res.status(200).json(newPoke);
   } catch (error) {
     res.send(" error no se pudoooo crear ");

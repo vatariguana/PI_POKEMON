@@ -15,7 +15,7 @@ export const getAllTypes = () => async (dispatch) => {
         type: "GET_ALL_ERRORS_TYPE",
         payload: {
           title: "ERROR",
-          message: "ALGO FALLO",
+          message: "Tipo de Pokemon no encontrado",
         },
       })
     }

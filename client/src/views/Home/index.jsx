@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import PaginadoPokemon from "../../components/Paginado";
 const Home = () => {
   const dispatch = useDispatch();
-  const { pokemons, isLoading } = useSelector(
+  const { pokemons, isLoading, errors } = useSelector(
     ({ pokemonReducer }) => pokemonReducer
   );
   const { pokemonType } = useSelector(({ tipoReducer }) => tipoReducer);
@@ -19,7 +19,7 @@ const Home = () => {
   // paginado
   const [paginaActual, setPaginaActual] = useState(1); //estados locales
   // const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
-  const pokemonsPerPage = 2;
+  const pokemonsPerPage = 12;
   const indexOfLastPokemon = paginaActual * pokemonsPerPage;
   const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
   const pokemonsPaginaActual = pokemons?.slice(
@@ -171,7 +171,12 @@ const Home = () => {
         onChangeAscDesc={onChangeAscDesc}
         onChangeFuerza={onChangeFuerza}
       />
-      <Table headers={headers} data={pokemonTable} />
+      <Table
+        headers={headers}
+        data={pokemonTable}
+        errors={errors}
+        isLoading={isLoading}
+      />
       <PaginadoPokemon
         pokemonsPerPage={pokemonsPerPage}
         paginado={paginado}

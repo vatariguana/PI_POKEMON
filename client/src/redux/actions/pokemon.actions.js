@@ -27,6 +27,7 @@ export const getPokemonsName = (name)=> async(dispatch)=>{
   })
   try {
     const response = await axios.get(`http://localhost:3001/pokemons/${name}`);
+    console.log("RESPONSE",response)
     dispatch({
       type: "GET_ALL_POKEMONS",
       payload: response.data,
@@ -36,7 +37,7 @@ export const getPokemonsName = (name)=> async(dispatch)=>{
       type: "GET_ALL_ERRORS",
       payload: {
         title: "ERROR",
-        message: "ALGO FALLO",
+        message: "Pokemon no Encontrado por nombre",
       },
     })
   }

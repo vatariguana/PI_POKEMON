@@ -1,6 +1,6 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { getPokemonsName } from "../../redux/actions/pokemon.actions";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const SearchName = () => {
   const [name, setName] = useState("");
@@ -12,6 +12,7 @@ const SearchName = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log("NAME:", name);
     dispatch(getPokemonsName(name));
   };
 
