@@ -22,6 +22,7 @@ const Landing = () => {
               <div className="repositorio">
                 <label>Veronica Atariguana</label>
                 <a
+                  className="repoA"
                   target="_blank"
                   href="https://github.com/vatariguana/PI_POKEMON"
                   rel="noreferrer"

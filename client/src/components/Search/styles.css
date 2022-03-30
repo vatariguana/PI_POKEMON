@@ -1,0 +1,33 @@
+.searchS {
+  width: 100%;
+  display: flex;
+}
+.searchS .divSearch {
+  display: flex;
+  width: 100%;
+}
+.searchS .formS {
+  color: whitesmoke;
+}
+.searchS .formS .inputS {
+  width: 250px;
+  height: 35px;
+  margin-top: 15px;
+  margin-left: 5px;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+.searchS .buttonS {
+  width: 100px;
+  height: 35px;
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-left: 4px;
+  font-size: 20px;
+}
+.searchS .buttonS:hover {
+  background-color: gray;
+  color: white;
+  cursor: pointer;
+}

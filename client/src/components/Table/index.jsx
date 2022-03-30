@@ -6,7 +6,7 @@ const Table = (props) => {
   const { headers, data, errors, isLoading } = props;
 
   return (
-    <>
+    <div className="tableDiv">
       <table className="table">
         <thead className="thead">
           <tr>
@@ -72,7 +72,7 @@ const Table = (props) => {
           </tbody>
         )}
       </table>
-    </>
+    </div>
   );
 };
 

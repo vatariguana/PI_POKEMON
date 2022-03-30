@@ -1,0 +1,17 @@
+.filtroP {
+  display: flex;
+  justify-content: space-evenly;
+  height: 4%;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+.filtroP .filtroSelect {
+  font-size: 20px;
+}
+
+.filtroP .filtroSelect:hover {
+  background-color: gray;
+  color: white;
+  cursor: pointer;
+}

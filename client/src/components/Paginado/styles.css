@@ -13,5 +13,11 @@
 }
 
 .paginadoNav .paginadoUl .paginadoLi .paginadoBot {
-  padding: 5px;
+  padding: 6px;
+}
+
+.paginadoNav .paginadoUl .paginadoLi .paginadoBot:hover {
+  background-color: gray;
+  color: white;
+  cursor: pointer;
 }

@@ -90,9 +90,12 @@ const CreatePokemon = () => {
   return (
     <div className="divPrincipal">
       <form onSubmit={onSubmitForm} className="form">
-        <Link to="/home">
-          <button>Home</button>
-        </Link>
+        <div className="divHome">
+          <Link to="/home">
+            <button className="homeButt">Home</button>
+          </Link>
+        </div>
+
         <h3>Crear nuevo Pokemon</h3>
         <label>
           Nombre:

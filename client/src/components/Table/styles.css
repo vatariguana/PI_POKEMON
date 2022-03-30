@@ -1,14 +1,35 @@
-.table {
-  width: 100%;
+.tableDiv {
+  display: flex;
+  justify-content: space-around;
+}
+
+.tableDiv .table {
+  width: 50%;
   margin-top: 10px;
   margin-left: 10px;
-  border: 2px solid black;
+  border: 2px solid bisque;
 }
-.table .thead {
-  background-color: rgb(181, 162, 199);
+.tableDiv .table .thead {
+  background-color: rgb(226, 30, 30);
   height: 40px;
+  color: white;
 }
-.table .tbody tr td {
+.tableDiv .table .tbody tr:hover {
+  background-color: rgba(59, 20, 20, 0.082);
+}
+
+.tableDiv .table .tbody tr td {
   text-align: center;
-  border-bottom: 1px solid rgb(65, 65, 61);
+  border-bottom: 1px solid rgb(37, 34, 36);
+}
+
+.tableDiv .table .tbody tr td:hover {
+  cursor: pointer;
+  color: white;
+}
+
+.tableDiv .table .tbody tr td a {
+  color: black;
+  text-decoration: none;
+  font-size: 20px;
 }

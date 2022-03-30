@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getPokemonsName } from "../../redux/actions/pokemon.actions";
 import { useDispatch } from "react-redux";
-
+import "./styles.css";
 const SearchName = () => {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
@@ -17,16 +17,21 @@ const SearchName = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
-          type="search"
-          id="search"
-          onChange={handleInputChange}
-          value={name}
-          placeholder="Encuentra tu pokemon..."
-        />
-        <button type="submit">Search</button>
+    <div className="searchS">
+      <form className="formS" onSubmit={onSubmit}>
+        <div className="divSearch">
+          <input
+            className="inputS"
+            type="search"
+            id="search"
+            onChange={handleInputChange}
+            value={name}
+            placeholder="Encuentra tu pokemon..."
+          />
+          <button className="buttonS" type="submit">
+            Search
+          </button>
+        </div>
       </form>
     </div>
   );

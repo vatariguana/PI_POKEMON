@@ -16,14 +16,17 @@ const DetailsPokemon = () => {
   }, []);
   console.log("pokemonid", pokemonId);
   const auxTipos = pokemonId?.types?.map((element) => {
-    return <p key={element.name}>{element.name}</p>;
+    return (
+      <div className="parrafo">
+        <label className="labelP" key={element.name}>
+          {element.name}
+        </label>
+      </div>
+    );
   });
 
   return (
     <div className="detailsPokemon">
-      <Link to="/home">
-        <button>Home</button>
-      </Link>
       {pokemonId?.imagen && (
         <div className="imageInfo">
           <img
@@ -35,16 +38,22 @@ const DetailsPokemon = () => {
       )}
 
       <div className="contenedorInfo">
-        <h3 className="info">{`Name: ${pokemonId?.name}`}</h3>
-        <h3 className="info">Tipos:</h3>
+        <div className="searchDiv">
+          <Link to="/home">
+            <button className="homeD">Home</button>
+          </Link>
+        </div>
+
+        <label className="info">{`Name: ${pokemonId?.name}`}</label>
+        <label className="info">Tipos:</label>
         {auxTipos}
-        <h3 className="info">{`Id: ${pokemonId?.id}`}</h3>
-        <h3 className="info">{`Vida: ${pokemonId?.vida}`}</h3>
-        <h3 className="info">{`Fuerza: ${pokemonId?.fuerza}`}</h3>
-        <h3 className="info">{`Defensa: ${pokemonId?.defensa}`}</h3>
-        <h3 className="info">{`Velocidad: ${pokemonId?.velocidad}`}</h3>
-        <h3 className="info">{`Altura: ${pokemonId?.altura}`}</h3>
-        <h3 className="info">{`Peso: ${pokemonId?.peso}`}</h3>
+        <label className="info">{`Id: ${pokemonId?.id}`}</label>
+        <label className="info">{`Vida: ${pokemonId?.vida}`}</label>
+        <label className="info">{`Fuerza: ${pokemonId?.fuerza}`}</label>
+        <label className="info">{`Defensa: ${pokemonId?.defensa}`}</label>
+        <label className="info">{`Velocidad: ${pokemonId?.velocidad}`}</label>
+        <label className="info">{`Altura: ${pokemonId?.altura}`}</label>
+        <label className="info">{`Peso: ${pokemonId?.peso}`}</label>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { getAllPokemons } from "../../redux/actions/pokemon.actions";
 import { getAllTypes } from "../../redux/actions/tipo.actions";
 import { Link } from "react-router-dom";
 import PaginadoPokemon from "../../components/Paginado";
+import "./styles.css";
 const Home = () => {
   const dispatch = useDispatch();
   const { pokemons, isLoading, errors } = useSelector(
@@ -56,9 +57,10 @@ const Home = () => {
 
   const onChangeType = (event) => {
     const value = event.target.value;
+
     let temporalPokemonTable = [];
     temporalPokemonTable = pokemons.filter((item) => {
-      const findTipes = item.tipos.find((type) => {
+      const findTipes = item.types.find((type) => {
         return type.name === value;
       });
       if (findTipes) {
@@ -159,9 +161,11 @@ const Home = () => {
   ];
 
   return (
-    <div>
+    <div className="contenedorHome">
       <Link to="/home/new">
-        <button>Create</button>
+        <div className="createDiv">
+          <button className="createB">Create</button>
+        </div>
       </Link>
       <Search />
       <Filtro

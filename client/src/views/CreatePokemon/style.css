@@ -1,15 +1,17 @@
 .divPrincipal {
   height: 100%;
-  background-image: url("../../assets/create6.jpg");
+  background-image: url("../../assets/poke3-fondo.jpg");
   display: flex;
   justify-content: center;
+  background-size: cover;
 }
 .divPrincipal .form {
   width: 400px;
-  padding: 8px;
+  padding: 5px;
+
   border-radius: 10px;
   margin: auto;
-  background-color: #ccc;
+  background-color: rgba(199, 195, 133, 0.3);
   box-sizing: border-box;
   display: inline-block;
 }
@@ -58,4 +60,21 @@
 .divPrincipal .form .enviar {
   display: flex;
   width: 100%;
+}
+
+.divHome {
+  display: flex;
+  justify-content: flex-end;
+}
+.divHome .homeButt {
+  width: 100px;
+  height: 35px;
+  border: 1px solid rgb(12, 11, 11);
+  color: white;
+  background-color: #000;
+}
+.divHome .homeButt:hover {
+  background-color: gray;
+  color: white;
+  cursor: pointer;
 }
