@@ -4,7 +4,7 @@ const axios = require("axios");
 const { Pokemon, Tipo } = require("../db");
 
 const getAllPokemons = async () => {
-  const info = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=5");
+  const info = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=40");
   const pokemonesAPI = info.data.results;
   const pokemones = [];
   for (let i = 0; i < pokemonesAPI.length; i++) {
@@ -217,9 +217,7 @@ router.get("/pokemons/:id", async (req, res) => {
 
 // create new pokemon
 router.post("/pokemons", async (req, res) => {
-  const { id, name, vida, fuerza, defensa, velocidad, altura, peso, tipo } =
-  //ojo defenza por defensa
-    req.body;
+  const { id, name, vida, fuerza, defensa, velocidad, altura, peso, tipo } = req.body;
 
   const pokeExiste = await Pokemon.findOne({
     where: {
@@ -228,7 +226,6 @@ router.post("/pokemons", async (req, res) => {
   });
 
   if (pokeExiste) return res.json({ msg: "Pokemon existente" });
-  console.log("tipo ===", tipo)
   try {
     const newPoke = await Pokemon.create({
       name,
@@ -240,7 +237,6 @@ router.post("/pokemons", async (req, res) => {
       altura,
       peso,
       id,
-
     });
 
     // hacer loop que recorra tipo y para cada item de tipo haga
@@ -250,7 +246,7 @@ router.post("/pokemons", async (req, res) => {
           name: tipo[i].name,
         },
       });
-      console.log(dataTipo,"datatipo<=======")
+      
   
       await newPoke.addTipo(dataTipo, {
         through: "tipo_pokemon",

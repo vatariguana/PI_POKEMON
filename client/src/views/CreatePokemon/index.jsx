@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllTypes } from "../../redux/actions/tipo.actions";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { CreatePoke } from "../../redux/actions/pokemon.actions";
 import "./style.css";
 
@@ -19,6 +19,8 @@ const CreatePokemon = () => {
     peso: 0,
   });
 
+  const [disabledButton, setDisabledButton] = useState(true);
+  const history = useHistory();
   const dispatch = useDispatch();
   const { pokemonType } = useSelector(({ tipoReducer }) => tipoReducer);
 
@@ -82,11 +84,26 @@ const CreatePokemon = () => {
       alert("ingrese tipo de pokemon");
     } else {
       // console.log("exito");
+      console.log(data);
       dispatch(CreatePoke(data));
       alert("pokemon creado");
+      history.push("/home");
     }
   };
 
+  useEffect(() => {
+    if (
+      data.name !== "" &&
+      data.vida !== 0 &&
+      data.fuerza !== 0 &&
+      data.defensa !== 0 &&
+      data.velocidad !== 0 &&
+      data.altura !== 0 &&
+      data.peso !== 0
+    ) {
+      setDisabledButton(false);
+    }
+  }, [data]);
   return (
     <div className="divPrincipal">
       <form onSubmit={onSubmitForm} className="form">
@@ -108,9 +125,8 @@ const CreatePokemon = () => {
             required
           />
         </label>
-
         {/* <label>Imagen:</label>
-        <input type="file" id="myfile" name="myfile" /> */}
+        <input type="text" id="myfile" name="myfile" />  */}
         <br></br>
         <label>Tipo</label>
         <select onChange={onChangeTypesPokemon} required>
@@ -211,7 +227,12 @@ const CreatePokemon = () => {
           />
         </label>
         <label className="enviar">
-          <input id="botonEnvio" type="submit" value="Crear"></input>
+          <input
+            id="botonEnvio"
+            type="submit"
+            value="Crear"
+            disabled={disabledButton}
+          />
         </label>
       </form>
     </div>
